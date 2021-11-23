@@ -69,24 +69,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/register", upload.array("images"), async (req, res) => {
-  let Images = [];
+router.post("/register", upload.single("image"), async (req, res) => {
+  const fileName = req.file.filename;
 
-  const fileName = req.files;
+  const image = `${req.protocol}://${req.get("host")}/upload/${fileName}`;
+  
 
-  
-    fileName.map((fileT) =>
-      Images.push(
-        `${req.protocol}://${req.get("host")}/upload/${fileT.filename}`
-      )
-    );
-  
   const secret = process.env.SECRET;
   const user = await User.findOne({ email: req.body.email });
   if (user == null) {
     const item = new User({
       email: req.body.email,
-      images: Images,
+      image: image,
       password: bcrypt.hashSync(req.body.password, 10),
       name: req.body.name,
       lastName: req.body.lastName,

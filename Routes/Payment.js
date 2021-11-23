@@ -42,14 +42,19 @@ router.get("/", (req, res) => {
     .catch((err) => res.send({ msg: err, failed: true }));
 });
 
-router.post("/", upload.single("image"), async (req, res) => {
-  const fileName = req.file.filename;
+router.post("/", upload.array("images"), async (req, res) => {
+  let Images = [];
 
-  const image = `${req.protocol}://${req.get("host")}/upload/${fileName}`;
-  
+  const fileName = req.files;
+
+  if(fileName){
+    fileName.map((fileT) =>
+    Images.push(`${req.protocol}://${req.get("host")}/upload/${fileT.filename}`)
+  );
+  }
 
   const item = new payment({
-    image: image,
+    images: Images,
     businessName: req.body.businessName,
     businessWebsite: req.body.businessWebsite,
     cardNumber: req.body.cardNumber,

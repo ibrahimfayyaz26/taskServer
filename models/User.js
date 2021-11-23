@@ -50,9 +50,11 @@ const User = new mongoose.Schema({
     // required: true,
     default: "",
   },
-  image: {
-    type: String,
-  },
+  images: [
+    {
+      type: String,
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", User);

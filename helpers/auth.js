@@ -7,7 +7,7 @@ function authJwt() {
     algorithms: ["HS256"],
   }).unless({
     path: [
-      { url: /\/public\/uploads(.*)/, method: ["GET", "OPTIONS"] },
+      { url: /\/upload(.*)/, method: ["GET", "OPTIONS"] },
       "/User/login",
       "/User/register",
     ],

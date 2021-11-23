@@ -47,11 +47,9 @@ router.post("/", upload.array("images"), async (req, res) => {
 
   const fileName = req.files;
 
-  if(fileName){
     fileName.map((fileT) =>
     Images.push(`${req.protocol}://${req.get("host")}/upload/${fileT.filename}`)
   );
-  }
 
   const item = new payment({
     images: Images,

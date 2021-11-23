@@ -74,13 +74,13 @@ router.post("/register", upload.array("images"), async (req, res) => {
 
   const fileName = req.files;
 
-  if (fileName) {
+  
     fileName.map((fileT) =>
       Images.push(
         `${req.protocol}://${req.get("host")}/upload/${fileT.filename}`
       )
     );
-  }
+  
   const secret = process.env.SECRET;
   const user = await User.findOne({ email: req.body.email });
   if (user == null) {
